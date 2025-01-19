@@ -4,7 +4,7 @@ from netmiko import ConnectHandler
 def fetch_cpu(conn):
     command = "top -bn1 | grep 'CPU' | head -n1"
     output = conn.send_command(command)
-    print(output.split())
+    print(output[1:].split())
 
 def main():
     instance_ip = "172.24.4.197"
