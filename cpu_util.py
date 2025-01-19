@@ -10,7 +10,7 @@ def fetch_cpu(conn, device):
     match = re.search(r"(\d+%)\s+idle", output)
     if match:
         cpu_util = 100 - int(match.group(1)[:-1])
-        print(f"CPU Utilization: {cpu_util}%") 
+        print(f" {device} CPU Utilization: {cpu_util}%") 
     else:
         print("Error finding CPU utilization")
 
