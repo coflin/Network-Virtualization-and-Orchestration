@@ -1,17 +1,19 @@
 import openstack
+import csv
 
 # Constants for OpenStack resources
 INSTANCE_NAME_PREFIX = "cirros-auto"
 FLAVOR_NAME = "m1.tiny"
 IMAGE_NAME = "cirros-0.6.3-x86_64-disk"
 NETWORK_NAME = "internal-network-1"
-SECURITY_GROUP = "261ba6d0-17ad-4b72-9150-b2ea32108dff"  
-PUBLIC_NETWORK = "public"
+SECURITY_GROUP = "261ba6d0-17ad-4b72-9150-b2ea32108dff"  # Name of the security group
+PUBLIC_NETWORK = "public"   # Name of the public network for floating IPs
+SSH_INFO_FILE = "sshInfo.csv"  # Path to the CSV file
 
 def create_cirros_instance(conn, instance_count):
     """
     Creates a new Cirros instance in OpenStack, adds it to the default security group,
-    and associates a floating IP from the public network.
+    associates a floating IP from the public network, and updates the sshInfo.csv file.
     """
     instance_name = f"{INSTANCE_NAME_PREFIX}-{instance_count}"
     print(f"Creating new instance: {instance_name}")
@@ -45,6 +47,9 @@ def create_cirros_instance(conn, instance_count):
         floating_ip = allocate_and_associate_floating_ip(conn, instance, public_network.id)
         print(f"Floating IP {floating_ip.floating_ip_address} associated with instance {instance_name}.")
 
+        # Update the sshInfo.csv file
+        update_ssh_info_file(instance_name, floating_ip.floating_ip_address)
+        print(f"sshInfo.csv updated with instance {instance_name}.")
     except Exception as e:
         print(f"Error creating instance: {e}")
 
@@ -63,6 +68,20 @@ def allocate_and_associate_floating_ip(conn, instance, public_network_id):
     # Associate the floating IP with the first port
     conn.network.update_ip(floating_ip, port_id=ports[0].id)
     return floating_ip
+
+def update_ssh_info_file(instance_name, floating_ip):
+    """
+    Updates the sshInfo.csv file with the instance details.
+    """
+    new_entry = [instance_name, "linux", floating_ip, "cirros", "gocubsgo"]
+
+    try:
+        # Append the new entry to the CSV file
+        with open(SSH_INFO_FILE, mode="a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow(new_entry)
+    except Exception as e:
+        print(f"Error updating sshInfo.csv: {e}")
 
 def main():
     """
