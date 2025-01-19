@@ -8,7 +8,7 @@ def fetch_cpu(conn):
 
     match = re.search(r"(\d+%)\s+idle", output)
     if match:
-        match.group(1)[:-1]
+        print(match.group(1)[:-1])
     else:
         print("Error finding CPU utilization")
 
