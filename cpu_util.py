@@ -7,8 +7,7 @@ def fetch_cpu(conn):
     output = conn.send_command(command)
 
     match = re.search(r"(\d+%)\s+idle", output)
-
-    print(match)
+    print(f"The percentage before 'idle' is: {match.group(1)}") if match else print("No match found.")
 
 def main():
     instance_ip = "172.24.4.197"
