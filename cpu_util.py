@@ -1,10 +1,14 @@
 #!/usr/bin/python3
 from netmiko import ConnectHandler
+import re
 
 def fetch_cpu(conn):
     command = "top -bn1 | grep 'CPU' | head -n1"
     output = conn.send_command(command)
-    print(output.find("idle"))
+
+    match = re.search(r"(\d+%)\s+idle", output)
+
+    print(match)
 
 def main():
     instance_ip = "172.24.4.197"
