@@ -2,7 +2,7 @@
 from netmiko import ConnectHandler
 
 def fetch_cpu(conn):
-    command = "top -bn1 | grep 'CPU' | head -n1 | awk '{print $8}' | cut -d'%' -f1"
+    command = "top -bn1 | grep 'CPU' | head -n1"
     print(conn.send_command(command))
 
 def main():
