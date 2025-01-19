@@ -8,9 +8,10 @@ def fetch_cpu(conn):
 
     match = re.search(r"(\d+%)\s+idle", output)
     if match:
-        print(match.group(1))
+        match.group(1)[:-1]
     else:
         print("Error finding CPU utilization")
+
 def main():
     instance_ip = "172.24.4.197"
     username = "cirros"
