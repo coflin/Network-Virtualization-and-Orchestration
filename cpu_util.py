@@ -16,17 +16,19 @@ def fetch_cpu(conn):
 
 def main():
     print(sshInfo())
-    instance_ip = "172.24.4.197"
-    username = "cirros"
-    password = "roomtoor"
-    device = {
-        "device_type": "linux",
-        "host": instance_ip,
-        "username": username,
-        "password": password
-    }   
-    conn = ConnectHandler(**device)
-    fetch_cpu(conn)
+    for device in sshInfo():
+        print(device)
+    # instance_ip = "172.24.4.197"
+    # username = "cirros"
+    # password = "roomtoor"
+    # device = {
+    #     "device_type": "linux",
+    #     "host": instance_ip,
+    #     "username": username,
+    #     "password": password
+    # }   
+    # conn = ConnectHandler(**device)
+    # fetch_cpu(conn)
 
 if __name__ == "__main__":
     main()
