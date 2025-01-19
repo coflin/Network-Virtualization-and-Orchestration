@@ -5,7 +5,7 @@ INSTANCE_NAME_PREFIX = "cirros-auto"
 FLAVOR_NAME = "m1.tiny"
 IMAGE_NAME = "cirros-0.6.3-x86_64-disk"
 NETWORK_NAME = "internal-network-1"
-SECURITY_GROUP = "default"
+SECURITY_GROUP = "261ba6d0-17ad-4b72-9150-b2ea32108dff"
 
 def create_cirros_instance(conn, instance_count):
     """
