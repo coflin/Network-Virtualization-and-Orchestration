@@ -8,7 +8,7 @@ import openstack
 
 # Global variables
 instance_count = 1
-MAX_INSTANCES = 4  # Maximum number of instances to create
+MAX_INSTANCES = 5  # Maximum number of instances to create
 CPU_THRESHOLD = 30  # CPU utilization threshold percentage
 
 def fetch_cpu(conn, device):
