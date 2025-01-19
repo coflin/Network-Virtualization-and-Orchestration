@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 from netmiko import ConnectHandler
 
-def fetch_cpu():
-    pass
+def fetch_cpu(conn):
+    command = "top -bn1 | grep 'Cpu(s)' | head -n1 | awk '{print $8}' | cut -d'%' -f1"
+    print(conn.send_command(command))
 
 def main():
     instance_ip = "172.24.4.197"
@@ -15,7 +16,7 @@ def main():
         "password": password
     }   
     conn = ConnectHandler(**device)
-    print(conn)
+    fetch_cpu(conn)
 
 if __name__ == "__main__":
     main()
