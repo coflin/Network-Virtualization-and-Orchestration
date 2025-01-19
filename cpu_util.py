@@ -26,17 +26,5 @@ def main():
         conn = ConnectHandler(**device_conn)
         fetch_cpu(conn,device)
 
-    # instance_ip = "172.24.4.197"
-    # username = "cirros"
-    # password = "roomtoor"
-    # device = {
-    #     "device_type": "linux",
-    #     "host": instance_ip,
-    #     "username": username,
-    #     "password": password
-    # }   
-    # conn = ConnectHandler(**device)
-    # fetch_cpu(conn)
-
 if __name__ == "__main__":
     main()
