@@ -23,7 +23,6 @@ def fetch_cpu(conn, device):
         if match:
             # Calculate CPU utilization from idle percentage
             cpu_util = 100 - int(match.group(1)[:-1])
-            print(f"{device} CPU Utilization: {cpu_util}%")
             return cpu_util
         else:
             print(f"Error finding CPU utilization on {device}")
