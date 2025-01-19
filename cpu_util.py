@@ -15,7 +15,7 @@ def fetch_cpu(conn):
         print("Error finding CPU utilization")
 
 def main():
-    print(sshInfo)
+    print(sshInfo())
     instance_ip = "172.24.4.197"
     username = "cirros"
     password = "roomtoor"
