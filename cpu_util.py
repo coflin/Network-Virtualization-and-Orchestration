@@ -38,9 +38,9 @@ def monitor_instances():
     """
     global instance_count
     conn = openstack.connect()
-    credentials = sshInfo()
 
     while instance_count <= MAX_INSTANCES:
+        credentials = sshInfo()
         for device in credentials:
             device_conn = {
                 "device_type": credentials[device]["Device_Type"],
