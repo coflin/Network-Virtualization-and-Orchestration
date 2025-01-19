@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from netmiko import ConnectHandler
 import re
+from sshInfo import sshInfo
 
 def fetch_cpu(conn):
     command = "top -bn1 | grep 'CPU' | head -n1"
@@ -14,6 +15,7 @@ def fetch_cpu(conn):
         print("Error finding CPU utilization")
 
 def main():
+    print(sshInfo)
     instance_ip = "172.24.4.197"
     username = "cirros"
     password = "roomtoor"
