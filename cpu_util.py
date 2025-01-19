@@ -3,7 +3,7 @@ from netmiko import ConnectHandler
 import re
 from sshInfo import sshInfo
 
-def fetch_cpu(conn):
+def fetch_cpu(conn, device):
     command = "top -bn1 | grep 'CPU' | head -n1"
     output = conn.send_command(command)
 
@@ -15,9 +15,17 @@ def fetch_cpu(conn):
         print("Error finding CPU utilization")
 
 def main():
-    print(sshInfo())
-    for device in sshInfo():
-        print(device)
+    credentials = sshInfo()
+    for device in credentials:
+        device = {
+            "device_type":  credentials[device]["Device_Type"],
+            "host": credentials[device]["IP"],
+            "username": credentials[device]["Username"],
+            "password": credentials[device]["Password"]
+        }
+        conn = ConnectHandler(**device)
+        fetch_cpu(conn,device)
+
     # instance_ip = "172.24.4.197"
     # username = "cirros"
     # password = "roomtoor"
