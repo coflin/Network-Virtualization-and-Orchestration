@@ -62,7 +62,7 @@ def monitor_instances():
                         elif instance_count == MAX_INSTANCES:
                             print(
                                 "CPU utilization threshold breached. "
-                                f"{MAX_INSTANCES} instances have already been created. "
+                                f"{MAX_INSTANCES-1} instances have already been created. "
                                 "No additional instances will be spun up."
                             )
                             return  # Exit monitoring loop once max instances are reached
