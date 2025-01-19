@@ -17,13 +17,13 @@ def fetch_cpu(conn, device):
 def main():
     credentials = sshInfo()
     for device in credentials:
-        device = {
+        device_conn = {
             "device_type":  credentials[device]["Device_Type"],
             "host": credentials[device]["IP"],
             "username": credentials[device]["Username"],
             "password": credentials[device]["Password"]
         }
-        conn = ConnectHandler(**device)
+        conn = ConnectHandler(**device_conn)
         fetch_cpu(conn,device)
 
     # instance_ip = "172.24.4.197"
