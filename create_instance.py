@@ -1,5 +1,6 @@
 import openstack
 import csv
+from loguru import logger
 
 # Constants for OpenStack resources
 INSTANCE_NAME_PREFIX = "cirros-auto"
@@ -16,7 +17,7 @@ def create_cirros_instance(conn, instance_count):
     associates a floating IP from the public network, and updates the sshInfo.csv file.
     """
     instance_name = f"{INSTANCE_NAME_PREFIX}-{instance_count}"
-    print(f"Creating new instance: {instance_name}")
+    logger.info(f"Creating new instance: {instance_name}")
 
     try:
         # Find resources
@@ -40,18 +41,17 @@ def create_cirros_instance(conn, instance_count):
 
         # Wait for the instance to become active
         conn.compute.wait_for_server(instance)
-        print(f"Instance {instance_name} created successfully!")
+        logger.success(f"Instance {instance_name} created successfully!")
 
         # Associate a floating IP
-        print("Allocating and associating a floating IP...")
         floating_ip = allocate_and_associate_floating_ip(conn, instance, public_network.id)
-        print(f"Floating IP {floating_ip.floating_ip_address} associated with instance {instance_name}.")
+        logger.success(f"Floating IP {floating_ip.floating_ip_address} associated with instance {instance_name}.")
 
         # Update the sshInfo.csv file
         update_ssh_info_file(instance_name, floating_ip.floating_ip_address)
-        print(f"sshInfo.csv updated with instance {instance_name}.")
+        logger.success(f"sshInfo.csv updated with instance {instance_name}.")
     except Exception as e:
-        print(f"Error creating instance: {e}")
+        logger.error(f"Error creating instance: {e}")
 
 def allocate_and_associate_floating_ip(conn, instance, public_network_id):
     """
@@ -81,7 +81,7 @@ def update_ssh_info_file(instance_name, floating_ip):
             writer = csv.writer(file)
             writer.writerow(new_entry)
     except Exception as e:
-        print(f"Error updating sshInfo.csv: {e}")
+        logger.error(f"Error updating sshInfo.csv: {e}")
 
 def main():
     """
@@ -91,12 +91,12 @@ def main():
     try:
         conn = openstack.connect()
     except Exception as e:
-        print(f"Failed to connect to OpenStack: {e}")
+        logger.error(f"Failed to connect to OpenStack: {e}")
         return
 
     # Create a new Cirros instance
     instance_count = 1
-    print("Spinning up a new Cirros instance...")
+    logger.debug("Spinning up a new Cirros instance...")
     create_cirros_instance(conn, instance_count)
 
 if __name__ == "__main__":
