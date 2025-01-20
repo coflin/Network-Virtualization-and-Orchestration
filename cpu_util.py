@@ -70,7 +70,7 @@ def monitor_instances():
                 logger.error(f"Error monitoring {device}: {e}")
 
         # Sleep before the next monitoring cycle
-        time.sleep(5)
+        time.sleep(40)
 
 def main():
     """
