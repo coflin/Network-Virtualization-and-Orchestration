@@ -5,6 +5,7 @@ import time
 from sshInfo import sshInfo
 from create_instance import create_cirros_instance
 import openstack
+from loguru import logger
 
 # Global variables
 instance_count = 1
@@ -25,10 +26,10 @@ def fetch_cpu(conn, device):
             cpu_util = 100 - int(match.group(1)[:-1])
             return cpu_util
         else:
-            print(f"Error finding CPU utilization on {device}")
+            logger.error(f"Error finding CPU utilization on {device}")
             return None
     except Exception as e:
-        print(f"Error fetching CPU utilization for {device}: {e}")
+        logger.error(f"Error fetching CPU utilization for {device}: {e}")
         return None
 
 def monitor_instances():
@@ -55,27 +56,27 @@ def monitor_instances():
                     # Check if CPU utilization exceeds the threshold
                     if cpu_util is not None and cpu_util > CPU_THRESHOLD:
                         if instance_count < MAX_INSTANCES:
-                            print(f"CPU utilization for {device} exceeds {CPU_THRESHOLD}%. Creating a new instance...")
+                            logger.warning(f"CPU utilization for {device} exceeds {CPU_THRESHOLD}%. Creating a new instance...")
                             create_cirros_instance(conn, instance_count)
                             instance_count += 1
                         elif instance_count == MAX_INSTANCES:
-                            print(
+                            logger.debug(
                                 "CPU utilization threshold breached. "
                                 f"{MAX_INSTANCES-1} instances have already been created. "
                                 "No additional instances will be spun up."
                             )
                             return  # Exit monitoring loop once max instances are reached
             except Exception as e:
-                print(f"Error monitoring {device}: {e}")
+                logger.error(f"Error monitoring {device}: {e}")
 
         # Sleep before the next monitoring cycle
-        time.sleep(1)
+        time.sleep(5)
 
 def main():
     """
     Main function to start monitoring.
     """
-    print("Starting instance CPU utilization monitoring...")
+    logger.info("Starting instance CPU utilization monitoring...")
     monitor_instances()
 
 if __name__ == "__main__":
