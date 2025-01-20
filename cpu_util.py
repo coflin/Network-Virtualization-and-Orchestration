@@ -8,8 +8,8 @@ import openstack
 
 # Global variables
 instance_count = 1
-MAX_INSTANCES = 5  # Maximum number of instances to create
-CPU_THRESHOLD = 30  # CPU utilization threshold percentage
+MAX_INSTANCES = 5  
+CPU_THRESHOLD = 30
 
 def fetch_cpu(conn, device):
     """
@@ -21,7 +21,7 @@ def fetch_cpu(conn, device):
 
         match = re.search(r"(\d+%)\s+idle", output)
         if match:
-            # Calculate CPU utilization from idle percentage
+           
             cpu_util = 100 - int(match.group(1)[:-1])
             return cpu_util
         else:
