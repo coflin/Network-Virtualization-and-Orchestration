@@ -1,0 +1,17 @@
+frr version 8.4_git
+frr defaults traditional
+hostname b0b35674e73c
+no ipv6 forwarding
+!
+password zebra
+enable password zebra
+!
+router bgp 65001
+ bgp router-id 1.1.1.1
+ neighbor 10.0.0.2 remote-as 65002
+ !
+ address-family ipv4 unicast
+  network 10.0.0.0/24
+ exit-address-family
+exit
+!
