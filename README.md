@@ -111,21 +111,13 @@ lab9/
 
 ## 📁 To-Do
 
-- Add support for dynamic route injection.
 - Automate testing with `test_connectivity.py`.
 - Export network topology as visual diagrams.
 
 ---
 
 ## 📌 Author
-Sneha (Network Engineering Lab @ CU Boulder)
+Sneha Irukuvajjula
 
----
 
-## 📜 License
-MIT
-
----
-
-Happy routing! 🧠📡
 
